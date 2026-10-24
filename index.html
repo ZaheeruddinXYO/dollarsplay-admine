@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollars Play ADMIN PANEL - Control Center</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#0b1120;color:#fff;display:flex;min-height:100vh}
+.sidebar{width:260px;background:#0f172a;border-right:1px solid #c9a86a33;padding:20px;position:fixed;height:100vh}
+.main{margin-left:260px;flex:1;padding:20px;background:#0b1120}
+.logo{color:#e6c06a;font-size:22px;font-weight:bold}
+.logo span{color:#fff;font-weight:300;font-size:13px;display:block}
+.owner-card{text-align:center;margin:20px 0;padding:15px;background:#1e293b;border-radius:12px}
+.owner-circle{width:70px;height:70px;border-radius:50%;background:#e6c06a;color:#0b1120;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold;margin:0 auto;border:2px solid #e6c06a}
+.menu li{padding:12px 15px;margin:6px 0;border-radius:8px;color:#94a3b8;list-style:none}
+.menu li.active{background:#e6c06a;color:#0b1120;font-weight:bold}
+.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #c9a86a33;padding-bottom:15px;margin-bottom:20px}
+.badge{background:#e6c06a33;color:#e6c06a;padding:5px 12px;border-radius:20px;font-size:12px;border:1px solid #e6c06a}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}
+.card{background:#151e32;border:1px solid #c9a86a55;border-radius:12px;padding:18px}
+.row{display:grid;grid-template-columns:1.5fr 1fr;gap:12px;margin-bottom:12px}
+.box{background:#151e32;border:1px solid #1e293b;border-radius:12px;padding:18px}
+.rate-box{background:#000;border:1px solid #e6c06a;border-radius:8px;padding:12px;text-align:center;color:#e6c06a;font-weight:bold;font-size:18px;margin:12px 0}
+.btn{background:#e6c06a;color:#0b1120;border:none;padding:12px;width:100%;border-radius:8px;font-weight:bold;cursor:pointer}
+.footer{text-align:center;padding:15px;color:#64748b;font-size:11px;border-top:1px solid #1e293b;margin-top:15px}
+@media(max-width:800px){.sidebar{display:none}.main{margin-left:0}.grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<div class="logo">$ Dollars Play <span>ADMIN PANEL - Control Center</span></div>
+<div class="owner-card">
+<div class="owner-circle">ZS</div>
+<h3 style="color:#e6c06a;margin-top:10px">Zaheeruddin Sabir</h3>
+<p style="color:#94a3b8;font-size:12px">Owner • Online • Karachi</p>
+<p style="color:#22c55e;font-size:11px;margin-top:6px">● System Online v1.0.0 - Secure</p>
+</div>
+<ul class="menu">
+<li class="active">▦ Dashboard - LIVE</li>
+<li>$ Coins Rate Control</li>
+<li>◧ Withdrawals - Sadapay</li>
+<li>👥 Users - 0</li>
+<li>⛓ Referrals 5 Levels</li>
+<li>📊 Ad Revenue - $0</li>
+<li>🎮 Games Control</li>
+<li>👛 Wallet - KYC</li>
+<li>🛡 Security - Owner Only</li>
+<li>🎧 Support</li>
+</ul>
+</div>
+
+<div class="main">
+<div class="topbar">
+<div><h2 style="color:#e6c06a">Dollars Play ADMIN PANEL</h2><p style="color:#94a3b8;font-size:13px">Owner: Zaheeruddin Sabir - Only You Can Access</p></div>
+<div style="display:flex;align-items:center;gap:10px"><span class="badge">LIVE DATA WILL APPEAR HERE • Now 0</span><div class="owner-circle" style="width:40px;height:40px;font-size:16px">ZS</div></div>
+</div>
+
+<div class="grid">
+<div class="card"><h4 style="color:#94a3b8;font-size:11px">Total Users</h4><h2>0</h2><p style="color:#64748b;font-size:11px">Will grow when app launches</p></div>
+<div class="card"><h4 style="color:#94a3b8;font-size:11px">Today Revenue</h4><h2>$0</h2><p style="color:#64748b;font-size:11px">AdMob $0</p></div>
+<div class="card"><h4 style="color:#94a3b8;font-size:11px">Pending Withdrawals</h4><h2>0</h2><p style="color:#64748b;font-size:11px">Queue Empty - Secure</p></div>
+<div class="card"><h4 style="color:#94a3b8;font-size:11px">Active Games</h4><h2>0</h2><p style="color:#64748b;font-size:11px">0 sessions</p></div>
+</div>
+
+<div class="row">
+<div class="box">
+<h3 style="color:#e6c06a">$ Coins Rate Control - Your Main Power</h3>
+<div class="rate-box" id="rateDisplay">1000 Coins = $1 = 280 PKR</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="usdRate" value="280" type="number" style="background:#0b1120;border:1px solid #334155;color:#fff;padding:8px;border-radius:6px"><input id="coinRate" value="1000" type="number" style="background:#0b1120;border:1px solid #334155;color:#fff;padding:8px;border-radius:6px"></div>
+<button class="btn" onclick="updateRate()">Update Rate</button>
+<p id="rateMsg" style="color:#22c55e;text-align:center;margin-top:8px;font-size:12px"></p>
+</div>
+<div class="box"><h3 style="color:#e6c06a">Game Controls</h3><p style="color:#94a3b8;font-size:12px;margin-bottom:10px">Baad me add ho sakta hai - YES</p><div style="display:flex;justify-content:space-between;margin:8px 0"><span>Slot Game</span><span style="background:#334155;padding:3px 10px;border-radius:5px">Disabled</span></div><div style="display:flex;justify-content:space-between;margin:8px 0"><span>Spin & Win</span><span style="background:#334155;padding:3px 10px;border-radius:5px">Disabled</span></div></div>
+</div>
+
+<div class="row">
+<div class="box"><h3 style="color:#e6c06a">Withdrawal Queue - Sadapay</h3><p style="color:#e6c06a">No pending withdrawals</p><p style="color:#94a3b8;font-size:12px;margin-top:6px">Jab User App se withdrawal ayega to yahan dikhega. Play Store user yahan kabhi nahi aa sakta. 3 Locks Security Active hai.</p></div>
+<div class="box"><h3 style="color:#e6c06a">Security - Owner Only</h3><p style="font-size:13px">KYC: 0 | Fraud: 0</p><div style="margin-top:8px;background:#22c55e22;border:1px solid #22c55e55;color:#22c55e;padding:5px 10px;border-radius:20px;display:inline-block;font-size:12px">Secure - Play Store Users Blocked</div><p style="color:#94a3b8;font-size:11px;margin-top:8px">Lock1: Alag Website, Lock2: Only Your Gmail, Lock3: Hidden + 2FA</p></div>
+</div>
+
+<div class="row">
+<div class="box"><h3 style="color:#e6c06a">Referral Tree - 5 Levels (5^4=625)</h3><div style="display:flex;gap:6px;margin:10px 0;flex-wrap:wrap"><span style="background:#1e293b;padding:5px 10px;border-radius:15px;border:1px solid #e6c06a">L1:0</span><span style="background:#1e293b;padding:5px 10px;border-radius:15px">L2:0</span><span style="background:#1e293b;padding:5px 10px;border-radius:15px">L3:0</span><span style="background:#1e293b;padding:5px 10px;border-radius:15px">L4:0</span><span style="background:#1e293b;padding:5px 10px;border-radius:15px">L5:0</span></div><p style="color:#94a3b8;font-size:11px">Total 0 - Aapka 50/50 split idea yahan live hoga</p></div>
+<div class="box"><h3 style="color:#e6c06a">Support</h3><p style="font-size:13px">Tickets: 0</p><button class="btn" style="background:transparent;border:1px solid #e6c06a;color:#e6c06a;margin-top:10px">View Inbox</button></div>
+</div>
+
+<div class="footer">Dollars Play • Owner: S Zaheeruddin Sabir • Karachi PK • Security: Owner Only • dollarsplay-admine.web.app • Baad me kuch bhi add ho sakta hai - YES - Modular System</div>
+</div>
+
+<script>
+function updateRate(){
+ var usd=document.getElementById('usdRate').value;
+ var coins=document.getElementById('coinRate').value;
+ document.getElementById('rateDisplay').innerText=coins+' Coins = $1 = '+usd+' PKR';
+ document.getElementById('rateMsg').innerText='✅ Rate Updated: '+coins+' Coins = '+usd+' PKR';
+}
+</script>
+</body>
+</html>
