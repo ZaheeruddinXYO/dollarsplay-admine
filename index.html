@@ -22,5 +22,35 @@ body{margin:0;font-family:Arial;background:#0a1931;color:white}
 .btn{background:#FFD700;color:#0a1931;padding:10px 18px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
 table{width:100%;border-collapse:collapse} th,td{padding:10px;border-bottom:1px solid #333;text-align:left} th{color:#FFD700}
 input{padding:10px;border-radius:6px;border:none;width:100%;margin:8px 0}
+.sec{display:none} .sec.active{display:block}
 </style>
 </head>
+<body>
+<div class="header">👑 MALIK DARBAR - DOLLARS PLAY ADMIN 👑</div>
+<div class="sidebar">
+<div class="active" onclick="show('dash')">📊 Dashboard</div>
+<div onclick="show('users')">👥 User Management</div>
+<div onclick="show('pass')">🔑 Password Recovery Logs</div>
+<div onclick="show('withdraw')">💰 Withdrawal - 2 Tijori</div>
+<div onclick="show('chat')">💬 Chatroom Support</div>
+<div onclick="show('slots')">🎰 Slots Control</div>
+</div>
+<div class="content">
+<div id="dash" class="sec active"><div class="card"><h2>Dashboard Live</h2><p>Project: <b>dollarsplay-admine</b></p><p>Total Users: <span id="totalUsers">Loading...</span></p></div><div class="card"><h3>Firebase Connected ✅</h3><p>Auth Domain: dollarsplay-admine.firebaseapp.com</p></div></div>
+<div id="users" class="sec"><div class="card"><h2>User Management</h2><table><thead><tr><th>Email</th><th>Balance</th><th>Action</th></tr></thead><tbody id="userList"></tbody></table></div></div>
+<div id="pass" class="sec"><div class="card" style="border-color:red"><h2>🔑 Password Recovery Logs (Aapki Special Demand)</h2><p>Yahan users ke password recovery requests ayenge</p><div id="passList"></div></div></div>
+<div id="withdraw" class="sec"><div class="card"><h2>💰 2 Tijori System</h2><div style="display:flex;gap:20px"><div style="flex:1;background:#0a1931;padding:15px;border-radius:8px"><h3>Withdraw Requests</h3><div id="withdrawList"></div></div><div style="flex:1;background:#0a1931;padding:15px;border-radius:8px"><h3>Deposit Requests</h3><div id="depositList"></div></div></div></div></div>
+<div id="chat" class="sec"><div class="card"><h2>💬 Chatroom Support</h2><p>Live chat yahan ayega</p><div id="chatBox"></div></div></div>
+<div id="slots" class="sec"><div class="card"><h2>🎰 Slots / Jackpot Control</h2><p>Win %: <input type="number" id="winPercent" placeholder="e.g. 30"></p><button class="btn" onclick="saveSlots()">Save</button></div></div>
+</div>
+<script>
+const firebaseConfig = { apiKey: "AIzaSyOpJiFoD0FZacFRt_CbWKpQsxKsJGjw", authDomain: "dollarsplay-admine.firebaseapp.com", projectId: "dollarsplay-admine" };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+function show(id){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.sidebar div').forEach(d=>d.classList.remove('active'));event.target.classList.add('active');if(id=='users')loadUsers();}
+async function loadUsers(){try{const snap=await db.collection("users").get();document.getElementById("totalUsers").innerText=snap.size;let html="";snap.forEach(doc=>{let d=doc.data();html+=`<tr><td>${d.email||doc.id}</td><td>${d.balance||0}</td><td><button class='btn'>Edit</button></td></tr>`});document.getElementById("userList").innerHTML=html;}catch(e){console.log(e)}}
+loadUsers();
+function saveSlots(){alert("Saved!")}
+</script>
+</body>
+</html>
