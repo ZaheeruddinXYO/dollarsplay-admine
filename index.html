@@ -4,22 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Malik Darbar - Dollars Play Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Malik Darbar - Dollars Play Admin</title>
-<link rel="manifest" href="manifest.json">    <-- YE NAYA
-<meta name="theme-color" content="#FFD700">   <-- YE NAYA
-<meta name="apple-mobile-web-app-capable"...  <-- YE NAYA
-<script>...                                   <-- YE NAYA
-<script src="https://www.gstatic.com/fire...
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }</script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <style>
 body{margin:0;font-family:Arial;background:#0a1931;color:white}
-.header{background:linear-gradient(90deg,#0a1931,#b8860b);padding:15px;text-align:center;font-size:22px;font-weight:bold;border-bottom:3px solid #FFD700}
+.header{background:linear-gradient(90deg,#0a1931,#b8860b);padding:15px;text-align:center;font-size:22px;font-weight:bold;border-bottom:1px solid #FFD700}
 .sidebar{width:250px;background:#112240;height:100vh;position:fixed;padding-top:20px}
 .sidebar div{padding:15px 20px;cursor:pointer;border-left:4px solid transparent}
-.sidebar div:hover,.active{background:#1a2f5a;border-left:4px solid #FFD700;color:#FFD700}
+.sidebar div:hover,.sidebar div.active{background:#1a2f5a;border-left:4px solid #FFD700;color:#FFD700}
 .content{margin-left:260px;padding:20px}
 .card{background:#112240;border:1px solid #FFD700;border-radius:12px;padding:20px;margin-bottom:20px}
 .btn{background:#FFD700;color:#0a1931;padding:10px 18px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
@@ -27,40 +24,3 @@ table{width:100%;border-collapse:collapse} th,td{padding:10px;border-bottom:1px 
 input{padding:10px;border-radius:6px;border:none;width:100%;margin:8px 0}
 </style>
 </head>
-<body>
-<div class="header">👑 MALIK DARBAR - DOLLARS PLAY ADMIN 👑</div>
-<div class="sidebar">
-<div class="active" onclick="show('dash')">📊 Dashboard</div>
-<div onclick="show('users')">👥 User Management</div>
-<div onclick="show('pass')">🔑 Password Recovery Logs</div>
-<div onclick="show('withdraw')">💰 Withdrawal - 2 Tijori</div>
-<div onclick="show('chat')">💬 Chatroom Support</div>
-<div onclick="show('slots')">🎰 Slots Control</div>
-</div>
-<div class="content">
-<div id="dash" class="sec">
-<div class="card"><h2>Dashboard Live</h2><p>Project: <b>dollarsplay-admine</b></p><p>Total Users: <span id="totalUsers">Loading...</span></p><p>SadaPay Tijori: <span style="color:#FFD700">PKR 0 (Connect Karna Hai)</span></p><p>HBL Tijori: <span style="color:#FFD700">PKR 0 (Connect Karna Hai)</span></p></div>
-<div class="card"><h3>Firebase Connected ✅</h3><p>Auth Domain: dollarsplay-admine.firebaseapp.com</p></div>
-</div>
-<div id="users" class="sec" style="display:none">
-<div class="card"><h2>User Management</h2><table><thead><tr><th>Email</th><th>Balance</th><th>Action</th></tr></thead><tbody id="userTable"><tr><td colspan="3">Firestore se data aa raha hai...</td></tr></tbody></table></div>
-</div>
-<div id="pass" class="sec" style="display:none">
-<div class="card" style="border-color:red"><h2>🔑 Password Recovery Logs (Aapki Special Demand)</h2><p>Yahan users ke password reset requests ayenge</p><table><tr><th>User Email</th><th>Time</th><th>New Password Action</th></tr><tr><td>test@gmail.com</td><td>Abhi</td><td><button class="btn">Reset Karo</button></td></tr></table></div>
-</div>
-<div id="withdraw" class="sec" style="display:none">
-<div class="card"><h2>💰 2 Tijori System</h2><div style="display:flex;gap:20px"><div style="flex:1;background:#0a1931;padding:15px;border-radius:8px;border:1px solid #FFD700"><h3>HBL Tijori (Bari Payments)</h3><input placeholder="HBL Account No"><button class="btn">Save</button></div><div style="flex:1;background:#0a1931;padding:15px;border-radius:8px;border:1px solid #00ff00"><h3>SadaPay Tijori (Choti Payments)</h3><input placeholder="SadaPay Number"><button class="btn">Save</button></div></div></div>
-</div>
-<div id="chat" class="sec" style="display:none"><div class="card"><h2>Chatroom Support</h2><p>Live chat yahan ayega</p></div></div>
-<div id="slots" class="sec" style="display:none"><div class="card"><h2>🎰 Slots / Jackpot Control</h2><p>Win %: <input type="number" value="30" style="width:80px"> <button class="btn">Update</button></p></div></div>
-</div>
-<script>
-const firebaseConfig = { apiKey: "AIzaSyDpIjiFoDOFZacFRt_CbwHXPqCqksJJ6jw", authDomain: "dollarsplay-admine.firebaseapp.com", projectId: "dollarsplay-admine", storageBucket: "dollarsplay-admine.firebasestorage.app", messagingSenderId: "647295802427", appId: "1:647295802427:web:f3dcec17e9fb3ea856d01e" };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-function show(id){document.querySelectorAll('.sec').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('.sidebar div').forEach(d=>d.classList.remove('active'));event.target.classList.add('active')}
-async function loadUsers(){try{const snap=await db.collection("users").get();document.getElementById("totalUsers").innerText=snap.size;let html="";snap.forEach(doc=>{let u=doc.data();html+=`<tr><td>${u.email||doc.id}</td><td>${u.balance||0}</td><td><button class='btn'>Block</button></td></tr>`});if(html)document.getElementById("userTable").innerHTML=html;else document.getElementById("userTable").innerHTML="<tr><td colspan='3'>Abhi koi user nahi hai Firestore me (users collection banao)</td></tr>"}catch(e){document.getElementById("totalUsers").innerText="Error: Rules check karo";document.getElementById("userTable").innerHTML=`<tr><td colspan='3'>${e.message}</td></tr>`}}
-loadUsers();
-</script>
-</body>
-  </html>
