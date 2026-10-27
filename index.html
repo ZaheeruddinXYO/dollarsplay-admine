@@ -1,113 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dollars Play ADMIN - Owner Only</title>
+<title>Dollars Play - Admin Panel</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#0b1120;color:#fff;min-height:100vh}
-#loginBox{display:flex;align-items:center;justify-content:center;min-height:100vh}
-.login-card{background:#0f172a;padding:40px;border-radius:16px;border:1px solid #e6c06a55;text-align:center;width:90%;max-width:400px}
-.owner-circle{width:80px;height:80px;border-radius:50%;background:#e6c06a;color:#0b1120;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;margin:0 auto 15px}
-.btn{background:#e6c06a;color:#0b1120;border:none;padding:12px 25px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%;margin-top:15px}
-#adminPanel{display:none}
-.sidebar{width:260px;background:#0f172a;border-right:1px solid #c9a86a33;padding:20px;position:fixed;height:100vh}
-.main{margin-left:260px;flex:1;padding:20px;background:#0b1120;min-height:100vh}
-.logo{color:#e6c06a;font-size:22px;font-weight:bold}
-.card{background:#151e32;border:1px solid #c9a86a55;border-radius:12px;padding:18px;margin-bottom:12px}
-.badge{background:#22c55e22;border:1px solid #22c55e55;color:#22c55e;padding:5px 12px;border-radius:20px;font-size:12px}
-@media(max-width:800px){.sidebar{display:none}.main{margin-left:0}}
+body{background:#0A1931; color:gold; font-family:sans-serif}
+.card{background:#102542; padding:20px; margin:10px; border-radius:10px; border:1px solid gold}
+button{background:gold; color:#0A1931; padding:8px 15px; border:none; border-radius:5px; font-weight:bold}
 </style>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
+<h1>Dollars Play - Malik Darbar 👑</h1>
 
-<div id="loginBox">
-<div class="login-card">
-<div class="owner-circle">ZS</div>
-<h2 style="color:#e6c06a">Dollars Play ADMIN</h2>
-<p style="color:#94a3b8;margin:10px 0;font-size:13px">Owner: Zaheeruddin Sabir</p>
-<p style="color:#22c55e;font-size:11px;border:1px solid #22c55e55;padding:5px;border-radius:20px">● Secure - Only zaheerbinzia@gmail.com</p>
-<button class="btn" onclick="login()">🔐 Login with Owner Gmail</button>
-<p id="msg" style="color:#ef4444;margin-top:12px;font-size:12px"></p>
-<p style="color:#475569;font-size:10px;margin-top:15px">Play Store users are BLOCKED by 3 Locks</p>
-</div>
+<div class="card">
+<h3>Dashboard</h3>
+<p>Total Users: <span id="totalUsers">0</span> | Online: <span id="onlineUsers">0</span> | SadaPay Balance: <span id="tijoriBalance">Rs. 0</span></p>
 </div>
 
-<div id="adminPanel">
-<div class="sidebar">
-<div class="logo">$ Dollars Play <span style="color:#fff;font-weight:300;font-size:12px;display:block">ADMIN PANEL</span></div>
-<div style="text-align:center;margin:20px 0;padding:15px;background:#1e293b;border-radius:12px">
-<div class="owner-circle" style="width:60px;height:60px;font-size:22px">ZS</div>
-<h3 style="color:#e6c06a;margin-top:8px;font-size:14px">Zaheeruddin Sabir</h3>
-<p style="color:#94a3b8;font-size:11px" id="sideEmail"></p>
-<p style="color:#22c55e;font-size:10px;margin-top:5px">● System Online - Secure</p>
-</div>
-<ul style="list-style:none">
-<li style="padding:10px;color:#e6c06a;background:#e6c06a22;border-radius:8px;margin:4px 0">▦ Dashboard - LIVE</li>
-<li style="padding:10px;color:#94a3b8;margin:4px 0">$ Coins Rate Control</li>
-<li style="padding:10px;color:#94a3b8;margin:4px 0">◧ Withdrawals - Sadapay</li>
-<li style="padding:10px;color:#94a3b8;margin:4px 0">👥 Users - 0</li>
-<li style="padding:10px;color:#94a3b8;margin:4px 0">🛡 Security - Owner Only</li>
-</ul>
-<button class="btn" onclick="logout()" style="background:transparent;border:1px solid #e6c06a;color:#e6c06a;margin-top:20px">Logout</button>
+<div class="card">
+<h3>Password Recovery Logs (Aapki Special Demand)</h3>
+<div id="recoveryLogs">Loading...</div>
+<button onclick="resetUserPassword()">Kisi User ka Password Reset Karo</button>
 </div>
 
-<div class="main">
-<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #c9a86a33;padding-bottom:15px;margin-bottom:20px">
-<div><h2 style="color:#e6c06a">Dollars Play ADMIN</h2><p style="color:#94a3b8;font-size:12px">Owner: Zaheeruddin Sabir - Only You Can Access</p></div>
-<div><span class="badge">LIVE • Firebase Connected</span></div>
+<div class="card">
+<h3>User Management</h3>
+<div id="userList">Loading Users...</div>
 </div>
 
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px">
-<div class="card"><h4 style="color:#94a3b8;font-size:11px">Total Users</h4><h2>0</h2><p style="color:#64748b;font-size:11px">Will grow when app launches</p></div>
-<div class="card"><h4 style="color:#94a3b8;font-size:11px">Today Revenue</h4><h2>$0</h2><p style="color:#64748b;font-size:11px">AdMob $0</p></div>
-<div class="card"><h4 style="color:#94a3b8;font-size:11px">Pending Withdrawals</h4><h2>0</h2><p style="color:#64748b;font-size:11px">Queue Empty - Secure</p></div>
-<div class="card"><h4 style="color:#94a3b8;font-size:11px">Active Games</h4><h2>0</h2><p style="color:#64748b;font-size:11px">0 sessions</p></div>
+<div class="card">
+<h3>Withdrawal - 2 Tijori System</h3>
+<p>HBL Tijori (Aane wali) | SadaPay Tijori (Jaane wali)</p>
+<div id="withdrawalList">Loading...</div>
 </div>
 
-<div class="card"><h3 style="color:#e6c06a">$ Coins Rate Control - Your Main Power</h3><div style="background:#000;border:1px solid #e6c06a;border-radius:8px;padding:12px;text-align:center;color:#e6c06a;font-weight:bold;margin:12px 0">1000 Coins = $1 = 280 PKR</div><p style="color:#94a3b8;font-size:12px">Aapka 50/50 split idea yahan live hoga - Firebase se connected!</p></div>
-<div class="card"><h3 style="color:#e6c06a">Security - 3 Locks Active ✅</h3><p style="font-size:13px;margin-top:8px">Lock1: Alag Website (GitHub), Lock2: Only zaheerbinzia@gmail.com, Lock3: Hidden + Firebase Auth</p><p style="color:#22c55e;font-size:12px;margin-top:8px">✅ Secure - Play Store Users Blocked</p></div>
-<div style="text-align:center;padding:15px;color:#64748b;font-size:11px">Dollars Play • Owner: S Zaheeruddin Sabir • Karachi PK • dollarsplay-admine.firebaseapp.com • zaheeruddinxyo.github.io</div>
-</div>
+<div class="card">
+<h3>Chatroom Support</h3>
+<div id="chatBox"></div>
+<input id="adminReply" placeholder="Jawab likho..."><button>Send</button>
 </div>
 
 <script>
-// FINAL FIREBASE CONFIG - AAPKI ZAMEEN
-const firebaseConfig = {
-  apiKey: "AIzaSyDpIjiFoDOFZacFRt_CbwHXPqCqksJJ6jw",
-  authDomain: "dollarsplay-admine.firebaseapp.com",
-  projectId: "dollarsplay-admine",
-  storageBucket: "dollarsplay-admine.firebasestorage.app",
-  messagingSenderId: "647295802427",
-  appId: "1:647295802427:web:f3dcec17e9fb3ea856d01e"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const OWNER_EMAIL = "zaheerbinzia@gmail.com";
-
-function login(){
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).catch(e=>{document.getElementById('msg').innerText=e.message});
-}
-auth.onAuthStateChanged(user=>{
-  if(user){
-    if(user.email.toLowerCase() === OWNER_EMAIL){
-      document.getElementById('loginBox').style.display='none';
-      document.getElementById('adminPanel').style.display='block';
-      document.getElementById('sideEmail').innerText=user.email;
-    } else {
-      document.getElementById('msg').innerText="⛔ Access Denied! Only "+OWNER_EMAIL+" allowed. Your: "+user.email;
-      auth.signOut();
-    }
-  }else{
-    document.getElementById('loginBox').style.display='flex';
-    document.getElementById('adminPanel').style.display='none';
-  }
-});
-function logout(){auth.signOut();}
+// Firebase Config - Aapki Dollars Play App wali
+// Yahan par Firebase + Password Recovery + Ad Removal Logic lagega
+// Coins Rate: 1000 Coins = $1 = Rs. 280 (Admin can change)
+console.log("Admin Panel Ready - Slots Game Included");
 </script>
 </body>
- </html>
+</html>
