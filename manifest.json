@@ -1,0 +1,15 @@
+{
+  "name": "Malik Darbar - Dollars Play Admin",
+  "short_name": "Malik Darbar",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a1931",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3069/3069041.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
